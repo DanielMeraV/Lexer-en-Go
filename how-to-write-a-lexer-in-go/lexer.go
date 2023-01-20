@@ -23,6 +23,11 @@ const (
 	MUL // *
 	DIV // /
 	ANA // ¬
+	PI
+	E
+	EXP // ^
+	PRI // (
+	PRD // )
 
 	ASSIGN // =
 )
@@ -31,7 +36,7 @@ var tokens = []string{
 	EOF:     "EOF",
 	ILLEGAL: "ILLEGAL",
 	IDENT:   "IDENT",
-	INT:     "INT",
+	INT:     "NUMBER",
 	SEMI:    ";",
 
 	// Infix ops
@@ -40,6 +45,11 @@ var tokens = []string{
 	MUL: "*",
 	DIV: "/",
 	ANA: "ANA",
+	PI:  "PI",
+	E:   "E",
+	PRI: "(",
+	PRD: ")",
+	EXP: "^",
 
 	ASSIGN: "=",
 }
@@ -101,6 +111,16 @@ func (l *Lexer) Lex() (Position, Token, string) {
 			return l.pos, ASSIGN, "="
 		case '¬':
 			return l.pos, ANA, "¬"
+		case 'π':
+			return l.pos, PI, "PI"
+		case 'E':
+			return l.pos, E, "E"
+		case '(':
+			return l.pos, PRI, "("
+		case ')':
+			return l.pos, PRD, ")"
+		case '^':
+			return l.pos, EXP, "^"
 		default:
 			if unicode.IsSpace(r) {
 				continue // nothing to do here, just move on
